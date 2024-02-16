@@ -4,7 +4,7 @@
 
 ## Video
 
-[Ссылка на мое видео](https://vimeo.com/913767302?share=copy)
+[Ссылка на видео](https://vimeo.com/913767302?share=copy)
 
 ## ScreenShots
 
