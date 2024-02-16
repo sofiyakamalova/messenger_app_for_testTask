@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:messenger_app/src/components/my_text_field.dart';
 import 'package:messenger_app/src/core/common_widgets/text_theme.dart';
 import 'package:messenger_app/src/core/constants/app_colors.dart';
 import 'package:messenger_app/src/features/chats_page/presentation/open_chat_page.dart';
@@ -15,6 +16,7 @@ class ChatsPage extends StatefulWidget {
 }
 
 class _ChatsPageState extends State<ChatsPage> {
+  final TextEditingController _searchController = TextEditingController();
   //instance of auth
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -30,29 +32,38 @@ class _ChatsPageState extends State<ChatsPage> {
       child: Scaffold(
         backgroundColor: AppColors.whiteColor,
         appBar: AppBar(
+          toolbarHeight: 120,
           backgroundColor: AppColors.whiteColor,
-          title: const CommonTitle(
-            title: 'Чаты',
-            textColor: Colors.black,
-            size: 30,
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconButton(
-                onPressed: signOut,
-                icon: const Icon(
-                  Icons.logout,
-                  color: AppColors.secondMainColor,
-                  size: 35,
-                ),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(height: 15.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const CommonTitle(
+                      title: 'Чаты', textColor: Colors.black, size: 30),
+                  IconButton(
+                    onPressed: signOut,
+                    icon: const Icon(
+                      Icons.logout,
+                      color: AppColors.secondMainColor,
+                      size: 30,
+                    ),
+                  ),
+                ],
               ),
-            )
-          ],
+              const SizedBox(height: 10.0),
+              MyTextField(
+                  controller: _searchController,
+                  hintText: 'Поиск',
+                  obscureText: false),
+            ],
+          ),
         ),
         body: Column(
           children: <Widget>[
-            const SizedBox(height: 30.0),
+            const SizedBox(height: 20.0),
             const Divider(height: 1.0, color: AppColors.lineColor),
             Expanded(
               child: Padding(
