@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:messenger_app/src/components/chat_messages.dart';
 import 'package:messenger_app/src/components/my_text_field.dart';
 import 'package:messenger_app/src/core/constants/app_colors.dart';
 import 'package:messenger_app/src/services/chat_service/chat_service.dart';
@@ -60,9 +62,7 @@ class _OpenChatPageState extends State<OpenChatPage> {
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 15,
-              ),
+              const SizedBox(width: 15),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -96,6 +96,7 @@ class _OpenChatPageState extends State<OpenChatPage> {
             Expanded(child: _buildMessageList()),
             //input textfield
             _buildMessageInput(),
+            const SizedBox(height: 15),
           ],
         ),
       ),
@@ -128,41 +129,104 @@ class _OpenChatPageState extends State<OpenChatPage> {
     );
   }
 
+  //variable for saving
+  Map<String, dynamic>? previousMessage;
   //message item
   Widget _buildMessageItem(DocumentSnapshot document) {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-    var aligment = (data['senderId'] == _firebaseAuth.currentUser!.uid)
+    var alignment = (data['senderId'] == _firebaseAuth.currentUser!.uid)
         ? Alignment.centerRight
         : Alignment.centerLeft;
+
+    // Timestamp в объект DateTime
+    DateTime dateTime = data['timestamp'].toDate();
+    String time = DateFormat.Hm().format(dateTime);
+    String date = DateFormat.yMd().format(dateTime);
+
+    bool showDate = previousMessage == null ||
+        previousMessage!['timestamp'].toDate().day != dateTime.day;
+    previousMessage = data;
+
     return Container(
-      alignment: aligment,
-      child: Column(
-        children: <Widget>[
-          Text(data['senderEmail']),
-          Text(data['message']),
-        ],
+      alignment: alignment,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment:
+              (data['senderId'] == _firebaseAuth.currentUser!.uid)
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
+          mainAxisAlignment:
+              (data['senderId'] == _firebaseAuth.currentUser!.uid)
+                  ? MainAxisAlignment.end
+                  : MainAxisAlignment.start,
+          children: <Widget>[
+            //Text(data['senderEmail']),
+            if (showDate)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            border: Border(
+                                bottom:
+                                    BorderSide(color: AppColors.grey2Color))),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(date),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            border: Border(
+                                bottom:
+                                    BorderSide(color: AppColors.grey2Color))),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ChatMessages(message: data['message']),
+            Text(
+              time,
+              style: const TextStyle(fontSize: 12),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   //message input
   Widget _buildMessageInput() {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: MyTextField(
-            controller: _messageController,
-            hintText: 'Сообщение',
-            obscureText: false,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: MyTextField(
+                  controller: _messageController,
+                  hintText: 'Сообщение',
+                  obscureText: false,
+                ),
+              ),
+              IconButton(
+                onPressed: sendMessage,
+                icon: const Icon(
+                  Icons.send,
+                  size: 35,
+                ),
+              )
+            ],
           ),
-        ),
-        IconButton(
-            onPressed: sendMessage,
-            icon: const Icon(
-              Icons.send,
-              size: 40,
-            ))
-      ],
+        ],
+      ),
     );
   }
 }

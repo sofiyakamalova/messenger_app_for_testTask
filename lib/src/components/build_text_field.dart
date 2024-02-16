@@ -15,19 +15,27 @@ class BuildTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      obscureText: obscureText,
-      decoration: InputDecoration(
-        hintText: hintText,
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColors.secondMainColor, width: 2),
+    return SizedBox(
+      height: 45,
+      child: TextField(
+        controller: controller,
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: const TextStyle(fontSize: 14),
+          fillColor: AppColors.fillColor,
+          filled: true,
+          enabledBorder: OutlineInputBorder(
+            borderSide:
+                const BorderSide(color: AppColors.secondMainColor, width: 1),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide:
+                const BorderSide(color: AppColors.secondMainColor, width: 1),
+            borderRadius: BorderRadius.circular(15),
+          ),
         ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
-        ),
-        fillColor: AppColors.fillColor,
-        filled: true,
       ),
     );
   }
