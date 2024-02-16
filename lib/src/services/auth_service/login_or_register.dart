@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:messenger_app/src/features/auth/login_page.dart';
-import 'package:messenger_app/src/features/auth/register_page.dart';
+import 'package:messenger_app/src/features/auth/presentation/login_page.dart';
+import 'package:messenger_app/src/features/auth/presentation/register_page.dart';
 
 class LoginOrRegister extends StatefulWidget {
   const LoginOrRegister({super.key});

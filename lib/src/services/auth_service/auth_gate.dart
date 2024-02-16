@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:messenger_app/src/features/home/home_page.dart';
+import 'package:messenger_app/src/features/chats_page/presentation/chats_page.dart';
 import 'package:messenger_app/src/services/auth_service/login_or_register.dart';
 
 class AuthGate extends StatelessWidget {
@@ -13,7 +13,7 @@ class AuthGate extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const HomePage();
+            return const ChatsPage();
           } else {
             return const LoginOrRegister();
           }
