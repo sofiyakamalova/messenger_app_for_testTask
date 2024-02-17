@@ -53,51 +53,53 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const CommonTitle(
-                    title: "Let's create a new account !",
-                    size: 35,
-                    align: TextAlign.center),
-                const SizedBox(height: 25),
-                const SizedBox(height: 25),
-                BuildTextField(
-                  controller: emailController,
-                  hintText: 'Your email',
-                  obscureText: false,
-                ),
-                const SizedBox(height: 15),
-                BuildTextField(
-                  controller: passwordController,
-                  hintText: 'New password',
-                  obscureText: false,
-                ),
-                const SizedBox(height: 15),
-                BuildTextField(
-                  controller: confirmPasswordController,
-                  hintText: 'Confirm password',
-                  obscureText: false,
-                ),
-                const SizedBox(height: 25),
-                BuildButton(onTap: signUp, text: 'SIGN UP'),
-                const SizedBox(height: 25),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const Text('You already have account? '),
-                    GestureDetector(
-                      onTap: widget.onTap,
-                      child: const Text(
-                        'Login now',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.secondMainColor),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const CommonTitle(
+                      title: "Let's create a new account !",
+                      size: 35,
+                      align: TextAlign.center),
+                  const SizedBox(height: 25),
+                  const SizedBox(height: 25),
+                  BuildTextField(
+                    controller: emailController,
+                    hintText: 'Your email',
+                    obscureText: false,
+                  ),
+                  const SizedBox(height: 15),
+                  BuildTextField(
+                    controller: passwordController,
+                    hintText: 'New password',
+                    obscureText: false,
+                  ),
+                  const SizedBox(height: 15),
+                  BuildTextField(
+                    controller: confirmPasswordController,
+                    hintText: 'Confirm password',
+                    obscureText: false,
+                  ),
+                  const SizedBox(height: 25),
+                  BuildButton(onTap: signUp, text: 'SIGN UP'),
+                  const SizedBox(height: 25),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Text('You already have account? '),
+                      GestureDetector(
+                        onTap: widget.onTap,
+                        child: const Text(
+                          'Login now',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.secondMainColor),
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              ],
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
